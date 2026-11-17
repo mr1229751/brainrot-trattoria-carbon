@@ -1,3 +1,4 @@
+// Brainrot Trattoria: this entry hands in the Rojo-built place, its screenshots and PLAY.json.
 // A working roblox-brainrot-01 entry (Node 22, standard library only): the game is this directory's Rojo
 // project, built into game.rbxl with `rojo build default.project.json --output game.rbxl`, and the program
 // hands it in. It copies game.rbxl, src/, screenshots/ and PLAY.json from beside this file to /output and
