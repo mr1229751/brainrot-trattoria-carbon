@@ -898,7 +898,7 @@ function CreatureConfig.createCreatureBillboard(
 	local staggerBonus = model:GetAttribute("TagHeightBonus")
 	if type(staggerBonus) ~= "number" then
 		tagStaggerSeq += 1
-		staggerBonus = if tagStaggerSeq % 2 == 0 then 3.8 else 0
+		staggerBonus = if tagStaggerSeq % 2 == 0 then 2.6 else 0
 		model:SetAttribute("TagHeightBonus", staggerBonus)
 	end
 
@@ -909,9 +909,9 @@ function CreatureConfig.createCreatureBillboard(
 	local bb = Instance.new("BillboardGui")
 	bb.Name = "CreatureInfoBillboard"
 	bb.Adornee = root
-	bb.StudsOffset = Vector3.new(0, (data.HeightStuds or 5.0) + 2.5 + staggerBonus, 0)
-	bb.Size = UDim2.new(0, 345, 0, if mutInfo.id ~= "None" then 162 else 132)
-	bb.MaxDistance = 320
+	bb.StudsOffset = Vector3.new(0, (data.HeightStuds or 5.0) + 1.95 + staggerBonus, 0)
+	bb.Size = UDim2.new(0, 242, 0, if mutInfo.id ~= "None" then 114 else 93)
+	bb.MaxDistance = 90
 	bb.LightInfluence = 0
 	bb.AlwaysOnTop = false
 	bb.Parent = model
@@ -925,12 +925,12 @@ function CreatureConfig.createCreatureBillboard(
 	container.Parent = bb
 
 	local corner = Instance.new("UICorner")
-	corner.CornerRadius = UDim.new(0, 14)
+	corner.CornerRadius = UDim.new(0, 10)
 	corner.Parent = container
 
 	local stroke = Instance.new("UIStroke")
 	stroke.Color = if mutInfo.id ~= "None" then mutInfo.color else rarityInfo.color
-	stroke.Thickness = 3.5
+	stroke.Thickness = 2.6
 	stroke.Parent = container
 	if rarityInfo.isRainbow and mutInfo.id == "None" then
 		CollectionService:AddTag(stroke, "RainbowStroke")
@@ -940,7 +940,7 @@ function CreatureConfig.createCreatureBillboard(
 	layout.FillDirection = Enum.FillDirection.Vertical
 	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	layout.VerticalAlignment = Enum.VerticalAlignment.Center
-	layout.Padding = UDim.new(0, 2)
+	layout.Padding = UDim.new(0, 1)
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = container
 
@@ -958,7 +958,7 @@ function CreatureConfig.createCreatureBillboard(
 
 		local ts = Instance.new("UIStroke")
 		ts.Color = Color3.fromRGB(8, 4, 16)
-		ts.Thickness = 2.6
+		ts.Thickness = 2.0
 		ts.Parent = lbl
 		return lbl
 	end

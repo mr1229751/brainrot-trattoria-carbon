@@ -112,23 +112,23 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 		return GameConfig.getBaseWorldPosition(def, depth, zOff, y)
 	end
 
-	-- Interior industrial floor deck (bright lavender-slate for strong creature contrast)
+	-- Interior industrial floor deck (mid lavender-slate, never clipped white)
 	makeBasePart(
 		model,
 		"BaseFloor",
 		Vector3.new(dim.DepthX, 0.3, dim.WidthZ),
 		CFrame.new(posAt(dim.DepthX * 0.5, 0, 0.15)),
-		Color3.fromRGB(178, 166, 208),
-		Enum.Material.SmoothPlastic
+		Color3.fromRGB(118, 106, 152),
+		Enum.Material.Concrete
 	)
-	-- Center aisle carpet strip (light warm gray matching promenades)
+	-- Center aisle carpet strip (mid lavender-gray matching promenades)
 	makeBasePart(
 		model,
 		"CenterAisle",
 		Vector3.new(dim.DepthX - 6, 0.34, 14),
 		CFrame.new(posAt(dim.DepthX * 0.5 + 1, 0, 0.17)),
-		Color3.fromRGB(224, 218, 212),
-		Enum.Material.SmoothPlastic
+		Color3.fromRGB(136, 126, 160),
+		Enum.Material.Concrete
 	)
 
 	-- Back & Side industrial walls
@@ -496,7 +496,7 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 			"SlotPedestal_" .. tostring(sIdx),
 			Vector3.new(dim.PedestalTopY - 0.15, 5.4, 5.4),
 			CFrame.new(pedCenter) * CFrame.Angles(0, 0, math.rad(90)),
-			Color3.fromRGB(238, 234, 246),
+			Color3.fromRGB(158, 146, 188),
 			Enum.Material.Marble,
 			true,
 			0,
@@ -742,7 +742,7 @@ function BaseService.updateSlotVisuals(base, slotIndex: number)
 	if slot.creatureUid then
 		local rec = CreatureService.getRecord(slot.creatureUid)
 		if rec and rec.model then
-			rec.model:SetAttribute("TagHeightBonus", if slotIndex % 2 == 0 then 3.8 else 0)
+			rec.model:SetAttribute("TagHeightBonus", if slotIndex % 2 == 0 then 2.6 else 0)
 			local statusTxt = "SLOT #" .. tostring(slotIndex) .. " • +" .. FormatUtil.formatCash(slot.accumulatedDisplay)
 			CreatureConfig.createCreatureBillboard(rec.model, slot.creatureId, slot.mutation, "slot", rebMult, statusTxt)
 		end

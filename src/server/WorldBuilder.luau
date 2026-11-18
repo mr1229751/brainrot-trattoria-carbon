@@ -188,15 +188,15 @@ function WorldBuilder.buildPrimitiveNPC(
 end
 
 local function configureLighting()
-	Lighting.Ambient = Color3.fromRGB(204, 198, 220)
-	Lighting.OutdoorAmbient = Color3.fromRGB(218, 212, 230)
-	Lighting.Brightness = 3.2
-	Lighting.ExposureCompensation = 0.35
+	Lighting.Ambient = Color3.fromRGB(186, 178, 206)
+	Lighting.OutdoorAmbient = Color3.fromRGB(196, 188, 214)
+	Lighting.Brightness = 2.5
+	Lighting.ExposureCompensation = 0.05
 	Lighting.ClockTime = 13.8
-	Lighting.ColorShift_Top = Color3.fromRGB(255, 252, 248)
-	Lighting.ColorShift_Bottom = Color3.fromRGB(218, 212, 232)
-	Lighting.EnvironmentDiffuseScale = 0.85
-	Lighting.EnvironmentSpecularScale = 0.85
+	Lighting.ColorShift_Top = Color3.fromRGB(248, 244, 255)
+	Lighting.ColorShift_Bottom = Color3.fromRGB(198, 190, 218)
+	Lighting.EnvironmentDiffuseScale = 0.65
+	Lighting.EnvironmentSpecularScale = 0.55
 	Lighting.GlobalShadows = true
 
 	for _, child in ipairs(Lighting:GetChildren()) do
@@ -205,17 +205,17 @@ local function configureLighting()
 
 	local cc = Instance.new("ColorCorrectionEffect")
 	cc.Name = "DaylightCrispGrading"
-	cc.Brightness = 0.04
-	cc.Contrast = 0.08
+	cc.Brightness = 0.0
+	cc.Contrast = 0.06
 	cc.Saturation = 0.04
-	cc.TintColor = Color3.fromRGB(255, 253, 255)
+	cc.TintColor = Color3.fromRGB(252, 249, 255)
 	cc.Parent = Lighting
 
 	local bloom = Instance.new("BloomEffect")
 	bloom.Name = "NeonGlowBloom"
-	bloom.Intensity = 0.34
-	bloom.Size = 18
-	bloom.Threshold = 1.35
+	bloom.Intensity = 0.14
+	bloom.Size = 14
+	bloom.Threshold = 1.65
 	bloom.Parent = Lighting
 
 	local atmo = Instance.new("Atmosphere")
@@ -235,11 +235,11 @@ local function buildFloorAndWalkways(mapFolder: Folder)
 	local l = GameConfig.Arena.HalfLengthZ * 2
 
 	-- Main purple industrial ground slab (top at Y = 0)
-	makePart(mapFolder, "ArenaMainFloor", Vector3.new(w + 20, 4, l + 20), CFrame.new(0, -2, 0), pal.FloorPrimary, Enum.Material.SmoothPlastic)
+	makePart(mapFolder, "ArenaMainFloor", Vector3.new(w + 20, 4, l + 20), CFrame.new(0, -2, 0), pal.FloorPrimary, Enum.Material.Concrete)
 
-	-- Lighter purple pedestrian promenades alongside the conveyor
-	makePart(mapFolder, "PromenadeWest", Vector3.new(34, 0.16, 276), CFrame.new(-28, 0.08, 0), pal.FloorWalkway, Enum.Material.SmoothPlastic)
-	makePart(mapFolder, "PromenadeEast", Vector3.new(34, 0.16, 276), CFrame.new(28, 0.08, 0), pal.FloorWalkway, Enum.Material.SmoothPlastic)
+	-- Mid lavender-gray matte pedestrian promenades alongside the conveyor
+	makePart(mapFolder, "PromenadeWest", Vector3.new(34, 0.16, 276), CFrame.new(-28, 0.08, 0), pal.FloorWalkway, Enum.Material.Concrete)
+	makePart(mapFolder, "PromenadeEast", Vector3.new(34, 0.16, 276), CFrame.new(28, 0.08, 0), pal.FloorWalkway, Enum.Material.Concrete)
 
 	-- Neon lane border lines along promenades
 	for _, xLine in ipairs({ -10.5, -45.2, 10.5, 45.2 }) do
@@ -249,14 +249,14 @@ local function buildFloorAndWalkways(mapFolder: Folder)
 	-- Cross-walkway carpets into each of the 8 bases
 	for _, b in ipairs(GameConfig.Bases) do
 		local sideSign = if b.frontX < 0 then -1 else 1
-		makePart(mapFolder, "BaseEntryWalk_" .. b.id, Vector3.new(36, 0.22, 16), CFrame.new(sideSign * 28, 0.11, b.centerZ), pal.FloorSecondary)
+		makePart(mapFolder, "BaseEntryWalk_" .. b.id, Vector3.new(36, 0.22, 16), CFrame.new(sideSign * 28, 0.11, b.centerZ), pal.FloorSecondary, Enum.Material.Concrete)
 		makePart(mapFolder, "BaseEntryTrimN_" .. b.id, Vector3.new(35, 0.25, 0.45), CFrame.new(sideSign * 28, 0.12, b.centerZ - 8.2), b.accent, Enum.Material.Neon, false)
 		makePart(mapFolder, "BaseEntryTrimS_" .. b.id, Vector3.new(35, 0.25, 0.45), CFrame.new(sideSign * 28, 0.12, b.centerZ + 8.2), b.accent, Enum.Material.Neon, false)
 	end
 
 	-- North Spawn Plaza & South Shrine Plaza floor inlays
-	makePart(mapFolder, "NorthPlazaFloor", Vector3.new(170, 0.18, 38), CFrame.new(0, 0.09, -153), pal.FloorSecondary)
-	makePart(mapFolder, "SouthPlazaFloor", Vector3.new(170, 0.18, 38), CFrame.new(0, 0.09, 153), pal.FloorSecondary)
+	makePart(mapFolder, "NorthPlazaFloor", Vector3.new(170, 0.18, 38), CFrame.new(0, 0.09, -153), pal.FloorSecondary, Enum.Material.Concrete)
+	makePart(mapFolder, "SouthPlazaFloor", Vector3.new(170, 0.18, 38), CFrame.new(0, 0.09, 153), pal.FloorSecondary, Enum.Material.Concrete)
 end
 
 local function buildCentralConveyor(mapFolder: Folder)
@@ -578,7 +578,7 @@ local function buildGoldenRebirthShrine(mapFolder: Folder, hooks: any)
 		{ pos = GameConfig.Shrine.HallEastPos + Vector3.new(8, 0, 0), id = "omni_nonna_prime", mut = "Void" },
 	}
 	for idx, entry in ipairs(showcasePairs) do
-		local ped = makePart(shrineFolder, "HallPedestal_" .. idx, Vector3.new(2.2, 6.5, 6.5), CFrame.new(entry.pos + Vector3.new(0, 1.1, 0)) * CFrame.Angles(0, 0, math.rad(90)), Color3.fromRGB(228, 222, 240), Enum.Material.Marble, true, Enum.PartType.Cylinder)
+		local ped = makePart(shrineFolder, "HallPedestal_" .. idx, Vector3.new(2.2, 6.5, 6.5), CFrame.new(entry.pos + Vector3.new(0, 1.1, 0)) * CFrame.Angles(0, 0, math.rad(90)), Color3.fromRGB(154, 142, 184), Enum.Material.Marble, true, Enum.PartType.Cylinder)
 		makePart(shrineFolder, "HallRim_" .. idx, Vector3.new(0.28, 6.9, 6.9), CFrame.new(entry.pos + Vector3.new(0, 2.25, 0)) * CFrame.Angles(0, 0, math.rad(90)), gold, Enum.Material.Neon, false, Enum.PartType.Cylinder)
 		local statue = CreatureConfig.buildCreatureModel(entry.id, entry.mut)
 		if statue then

@@ -172,8 +172,8 @@ local function stageConveyorRarityParade()
 	-- Spaced 28 studs apart along the belt with distinct lateral & vertical tag offsets so every tag stands completely alone
 	local paradeEntries = {
 		{ id = "rigatoni_rex", mutation = "None", pos = Vector3.new(1.8, beltY, -22), tagBonus = 0.0 },
-		{ id = "lasagna_mech", mutation = "None", pos = Vector3.new(4.2, beltY, 6), tagBonus = 4.4 },
-		{ id = "imperatore_cosmico", mutation = "Golden", pos = Vector3.new(1.4, beltY, 34), tagBonus = 1.8 },
+		{ id = "lasagna_mech", mutation = "None", pos = Vector3.new(4.2, beltY, 6), tagBonus = 2.8 },
+		{ id = "imperatore_cosmico", mutation = "Golden", pos = Vector3.new(1.4, beltY, 34), tagBonus = 1.4 },
 	}
 
 	-- Angled toward the Photo Point so their 3D faces and accessories read clearly

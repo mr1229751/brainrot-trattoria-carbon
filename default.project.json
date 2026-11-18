@@ -80,9 +80,9 @@
           0.83,
           0.9
         ],
-        "Brightness": 3.2,
+        "Brightness": 2.5,
         "ClockTime": 13.8,
-        "ExposureCompensation": 0.35,
+        "ExposureCompensation": 0.05,
         "GlobalShadows": true,
         "Outlines": false,
         "Technology": "Future"

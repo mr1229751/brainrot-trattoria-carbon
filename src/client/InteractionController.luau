@@ -50,7 +50,7 @@ local function applyParticlesSetting()
 end
 
 local function applyTagDistanceSetting()
-	local dist = if farTagsEnabled then 320 else 130
+	local dist = if farTagsEnabled then 90 else 56
 	local creaturesFolder = Workspace:FindFirstChild("Creatures")
 	if not creaturesFolder then
 		return
@@ -127,7 +127,7 @@ function InteractionController.init(remotesFolder: Folder)
 		if inst:IsA("ParticleEmitter") and not particlesEnabled then
 			inst.Enabled = false
 		elseif inst:IsA("BillboardGui") and inst.Name == "CreatureInfoBillboard" and not farTagsEnabled then
-			inst.MaxDistance = 130
+			inst.MaxDistance = 56
 		end
 	end)
 

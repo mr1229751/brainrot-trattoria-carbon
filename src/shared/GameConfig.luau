@@ -6,18 +6,18 @@ local GameConfig = {}
 GameConfig.GameTitle = "BRAINROT TRATTORIA"
 GameConfig.GameSubtitle = "Collect, Mutate, Defend & Steal!"
 
--- Bright daylight-ready purple & warm-gray industrial palette for high-contrast readability
+-- Balanced purple & mid lavender-gray industrial palette (no clipped white floors)
 GameConfig.Palette = {
-	FloorPrimary = Color3.fromRGB(142, 114, 192),
-	FloorSecondary = Color3.fromRGB(202, 194, 208),
-	FloorWalkway = Color3.fromRGB(220, 214, 206),
-	WallPrimary = Color3.fromRGB(150, 116, 214),
-	WallDark = Color3.fromRGB(104, 78, 162),
+	FloorPrimary = Color3.fromRGB(98, 82, 138),
+	FloorSecondary = Color3.fromRGB(118, 106, 148),
+	FloorWalkway = Color3.fromRGB(134, 124, 156),
+	WallPrimary = Color3.fromRGB(142, 108, 204),
+	WallDark = Color3.fromRGB(96, 72, 152),
 	WallTrim = Color3.fromRGB(196, 120, 255),
-	ConveyorSurface = Color3.fromRGB(36, 28, 56),
-	ConveyorStripe = Color3.fromRGB(64, 48, 96),
-	ConveyorBorderGold = Color3.fromRGB(255, 208, 38),
-	ConveyorArrowNeon = Color3.fromRGB(255, 226, 62),
+	ConveyorSurface = Color3.fromRGB(28, 22, 46),
+	ConveyorStripe = Color3.fromRGB(50, 38, 78),
+	ConveyorBorderGold = Color3.fromRGB(242, 194, 36),
+	ConveyorArrowNeon = Color3.fromRGB(250, 212, 54),
 	LaserRed = Color3.fromRGB(255, 42, 68),
 	CashPadGreen = Color3.fromRGB(36, 232, 98),
 	CashPadBorder = Color3.fromRGB(22, 142, 62),

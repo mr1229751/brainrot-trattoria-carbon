@@ -43,9 +43,9 @@ function TheftService.attachStealingBanner(model: Model, creatureId: string, mut
 	local bb = Instance.new("BillboardGui")
 	bb.Name = "CreatureInfoBillboard"
 	bb.Adornee = root
-	bb.StudsOffset = Vector3.new(0, (cDef.HeightStuds or 5.0) + 3.0, 0)
-	bb.Size = UDim2.new(0, 375, 0, 144)
-	bb.MaxDistance = 320
+	bb.StudsOffset = Vector3.new(0, (cDef.HeightStuds or 5.0) + 2.2, 0)
+	bb.Size = UDim2.new(0, 262, 0, 100)
+	bb.MaxDistance = 104
 	bb.LightInfluence = 0
 	bb.AlwaysOnTop = false
 	bb.Parent = model
@@ -58,10 +58,10 @@ function TheftService.attachStealingBanner(model: Model, creatureId: string, mut
 	card.BorderSizePixel = 0
 	card.Parent = bb
 
-	Instance.new("UICorner", card).CornerRadius = UDim.new(0, 14)
+	Instance.new("UICorner", card).CornerRadius = UDim.new(0, 10)
 	local stroke = Instance.new("UIStroke")
 	stroke.Color = Color3.fromRGB(255, 52, 72)
-	stroke.Thickness = 4.0
+	stroke.Thickness = 3.0
 	stroke.Parent = card
 
 	local badge = Instance.new("TextLabel")
