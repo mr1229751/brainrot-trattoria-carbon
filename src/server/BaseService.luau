@@ -112,22 +112,22 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 		return GameConfig.getBaseWorldPosition(def, depth, zOff, y)
 	end
 
-	-- Interior industrial floor deck
+	-- Interior industrial floor deck (bright lavender-slate for strong creature contrast)
 	makeBasePart(
 		model,
 		"BaseFloor",
 		Vector3.new(dim.DepthX, 0.3, dim.WidthZ),
 		CFrame.new(posAt(dim.DepthX * 0.5, 0, 0.15)),
-		Color3.fromRGB(46, 30, 76),
-		Enum.Material.Metal
+		Color3.fromRGB(178, 166, 208),
+		Enum.Material.SmoothPlastic
 	)
-	-- Center aisle carpet strip
+	-- Center aisle carpet strip (light warm gray matching promenades)
 	makeBasePart(
 		model,
 		"CenterAisle",
 		Vector3.new(dim.DepthX - 6, 0.34, 14),
 		CFrame.new(posAt(dim.DepthX * 0.5 + 1, 0, 0.17)),
-		Color3.fromRGB(64, 42, 104),
+		Color3.fromRGB(224, 218, 212),
 		Enum.Material.SmoothPlastic
 	)
 
@@ -174,10 +174,10 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 			"FrontWindow",
 			Vector3.new(0.6, 12.5, 15.8),
 			CFrame.new(posAt(0, zSide * 16.25, 9.45)),
-			Color3.fromRGB(165, 215, 255),
+			Color3.fromRGB(210, 236, 255),
 			Enum.Material.Glass,
 			true,
-			0.66
+			0.78
 		)
 		-- Upper wall fascia above window
 		makeBasePart(
@@ -398,9 +398,9 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 	local lockBb = Instance.new("BillboardGui")
 	lockBb.Name = "LockButtonGui"
 	lockBb.Adornee = lockButtonPart
-	lockBb.StudsOffset = Vector3.new(0, 2.8, 0)
-	lockBb.Size = UDim2.new(0, 175, 0, 54)
-	lockBb.MaxDistance = 75
+	lockBb.StudsOffset = Vector3.new(0, 3.2, 0)
+	lockBb.Size = UDim2.new(0, 235, 0, 74)
+	lockBb.MaxDistance = 210
 	lockBb.LightInfluence = 0
 	lockBb.Parent = lockButtonPart
 
@@ -447,9 +447,9 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 	local cashBb = Instance.new("BillboardGui")
 	cashBb.Name = "CashPlatformGui"
 	cashBb.Adornee = cashPadPart
-	cashBb.StudsOffset = Vector3.new(0, 3.6, 0)
-	cashBb.Size = UDim2.new(0, 200, 0, 66)
-	cashBb.MaxDistance = 95
+	cashBb.StudsOffset = Vector3.new(0, 4.2, 0)
+	cashBb.Size = UDim2.new(0, 285, 0, 92)
+	cashBb.MaxDistance = 260
 	cashBb.LightInfluence = 0
 	cashBb.Parent = cashPadPart
 
@@ -496,7 +496,7 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 			"SlotPedestal_" .. tostring(sIdx),
 			Vector3.new(dim.PedestalTopY - 0.15, 5.4, 5.4),
 			CFrame.new(pedCenter) * CFrame.Angles(0, 0, math.rad(90)),
-			Color3.fromRGB(58, 38, 96),
+			Color3.fromRGB(238, 234, 246),
 			Enum.Material.Marble,
 			true,
 			0,
@@ -507,7 +507,7 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 			"SlotRim_" .. tostring(sIdx),
 			Vector3.new(0.18, 5.75, 5.75),
 			CFrame.new(slotTopPos - Vector3.new(0, 0.05, 0)) * CFrame.Angles(0, 0, math.rad(90)),
-			Color3.fromRGB(115, 78, 175),
+			Color3.fromRGB(145, 108, 212),
 			Enum.Material.Neon,
 			false,
 			0,
@@ -742,6 +742,7 @@ function BaseService.updateSlotVisuals(base, slotIndex: number)
 	if slot.creatureUid then
 		local rec = CreatureService.getRecord(slot.creatureUid)
 		if rec and rec.model then
+			rec.model:SetAttribute("TagHeightBonus", if slotIndex % 2 == 0 then 3.8 else 0)
 			local statusTxt = "SLOT #" .. tostring(slotIndex) .. " • +" .. FormatUtil.formatCash(slot.accumulatedDisplay)
 			CreatureConfig.createCreatureBillboard(rec.model, slot.creatureId, slot.mutation, "slot", rebMult, statusTxt)
 		end

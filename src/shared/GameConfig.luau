@@ -6,23 +6,23 @@ local GameConfig = {}
 GameConfig.GameTitle = "BRAINROT TRATTORIA"
 GameConfig.GameSubtitle = "Collect, Mutate, Defend & Steal!"
 
--- Bright purple industrial palette tuned for high-contrast readability
+-- Bright daylight-ready purple & warm-gray industrial palette for high-contrast readability
 GameConfig.Palette = {
-	FloorPrimary = Color3.fromRGB(54, 34, 86),
-	FloorSecondary = Color3.fromRGB(68, 45, 106),
-	FloorWalkway = Color3.fromRGB(80, 54, 124),
-	WallPrimary = Color3.fromRGB(64, 40, 102),
-	WallDark = Color3.fromRGB(38, 24, 64),
-	WallTrim = Color3.fromRGB(168, 85, 255),
-	ConveyorSurface = Color3.fromRGB(24, 16, 38),
-	ConveyorStripe = Color3.fromRGB(42, 28, 66),
-	ConveyorBorderGold = Color3.fromRGB(255, 205, 35),
-	ConveyorArrowNeon = Color3.fromRGB(255, 220, 55),
+	FloorPrimary = Color3.fromRGB(142, 114, 192),
+	FloorSecondary = Color3.fromRGB(202, 194, 208),
+	FloorWalkway = Color3.fromRGB(220, 214, 206),
+	WallPrimary = Color3.fromRGB(150, 116, 214),
+	WallDark = Color3.fromRGB(104, 78, 162),
+	WallTrim = Color3.fromRGB(196, 120, 255),
+	ConveyorSurface = Color3.fromRGB(36, 28, 56),
+	ConveyorStripe = Color3.fromRGB(64, 48, 96),
+	ConveyorBorderGold = Color3.fromRGB(255, 208, 38),
+	ConveyorArrowNeon = Color3.fromRGB(255, 226, 62),
 	LaserRed = Color3.fromRGB(255, 42, 68),
 	CashPadGreen = Color3.fromRGB(36, 232, 98),
-	CashPadBorder = Color3.fromRGB(18, 125, 54),
-	ShrineGold = Color3.fromRGB(255, 202, 48),
-	ShrineAccent = Color3.fromRGB(255, 242, 150),
+	CashPadBorder = Color3.fromRGB(22, 142, 62),
+	ShrineGold = Color3.fromRGB(255, 206, 48),
+	ShrineAccent = Color3.fromRGB(255, 244, 156),
 	NeonCyan = Color3.fromRGB(55, 230, 255),
 	NeonMagenta = Color3.fromRGB(255, 70, 195),
 }

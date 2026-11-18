@@ -188,14 +188,15 @@ function WorldBuilder.buildPrimitiveNPC(
 end
 
 local function configureLighting()
-	Lighting.Ambient = Color3.fromRGB(142, 122, 176)
-	Lighting.OutdoorAmbient = Color3.fromRGB(154, 136, 188)
-	Lighting.Brightness = 2.65
-	Lighting.ClockTime = 14.2
-	Lighting.ColorShift_Top = Color3.fromRGB(248, 232, 255)
-	Lighting.ColorShift_Bottom = Color3.fromRGB(175, 138, 225)
-	Lighting.EnvironmentDiffuseScale = 0.70
-	Lighting.EnvironmentSpecularScale = 0.80
+	Lighting.Ambient = Color3.fromRGB(204, 198, 220)
+	Lighting.OutdoorAmbient = Color3.fromRGB(218, 212, 230)
+	Lighting.Brightness = 3.2
+	Lighting.ExposureCompensation = 0.35
+	Lighting.ClockTime = 13.8
+	Lighting.ColorShift_Top = Color3.fromRGB(255, 252, 248)
+	Lighting.ColorShift_Bottom = Color3.fromRGB(218, 212, 232)
+	Lighting.EnvironmentDiffuseScale = 0.85
+	Lighting.EnvironmentSpecularScale = 0.85
 	Lighting.GlobalShadows = true
 
 	for _, child in ipairs(Lighting:GetChildren()) do
@@ -203,28 +204,28 @@ local function configureLighting()
 	end
 
 	local cc = Instance.new("ColorCorrectionEffect")
-	cc.Name = "PurpleVividGrading"
-	cc.Brightness = 0.03
-	cc.Contrast = 0.12
-	cc.Saturation = 0.16
-	cc.TintColor = Color3.fromRGB(250, 242, 255)
+	cc.Name = "DaylightCrispGrading"
+	cc.Brightness = 0.04
+	cc.Contrast = 0.08
+	cc.Saturation = 0.04
+	cc.TintColor = Color3.fromRGB(255, 253, 255)
 	cc.Parent = Lighting
 
 	local bloom = Instance.new("BloomEffect")
 	bloom.Name = "NeonGlowBloom"
-	bloom.Intensity = 0.55
-	bloom.Size = 24
-	bloom.Threshold = 1.15
+	bloom.Intensity = 0.34
+	bloom.Size = 18
+	bloom.Threshold = 1.35
 	bloom.Parent = Lighting
 
 	local atmo = Instance.new("Atmosphere")
-	atmo.Name = "PurpleAtmosphere"
-	atmo.Density = 0.18
-	atmo.Offset = 0.1
-	atmo.Color = Color3.fromRGB(215, 185, 255)
-	atmo.Decay = Color3.fromRGB(152, 112, 220)
-	atmo.Glare = 0.15
-	atmo.Haze = 0.65
+	atmo.Name = "ClearDaylightAtmosphere"
+	atmo.Density = 0.03
+	atmo.Offset = 0.0
+	atmo.Color = Color3.fromRGB(244, 240, 255)
+	atmo.Decay = Color3.fromRGB(232, 226, 250)
+	atmo.Glare = 0.0
+	atmo.Haze = 0.0
 	atmo.Parent = Lighting
 end
 
@@ -314,19 +315,21 @@ local function buildCentralConveyor(mapFolder: Folder)
 	makePart(convFolder, "NorthPillarR", Vector3.new(3.2, 18, 3.2), CFrame.new(10.5, 9, northZ), pal.WallDark, Enum.Material.Metal)
 	makePart(convFolder, "NorthPillarTrimL", Vector3.new(0.6, 17, 0.6), CFrame.new(-8.7, 9, northZ + 1.5), pal.ConveyorBorderGold, Enum.Material.Neon, false)
 	makePart(convFolder, "NorthPillarTrimR", Vector3.new(0.6, 17, 0.6), CFrame.new(8.7, 9, northZ + 1.5), pal.ConveyorBorderGold, Enum.Material.Neon, false)
-	makePart(convFolder, "NorthPortalCurtain", Vector3.new(16.5, 13.5, 0.6), CFrame.new(0, 7.2, northZ), Color3.fromRGB(145, 55, 255), Enum.Material.ForceField, false)
+	local northCurtain = makePart(convFolder, "NorthPortalCurtain", Vector3.new(16.5, 13.5, 0.6), CFrame.new(0, 7.2, northZ), Color3.fromRGB(165, 95, 255), Enum.Material.ForceField, false)
+	northCurtain.Transparency = 0.78
 
 	local northHeader = makePart(convFolder, "NorthArchSign", Vector3.new(25, 4.8, 2.4), CFrame.new(0, 19.5, northZ), pal.WallDark, Enum.Material.Metal)
 	makeSurfaceSign(northHeader, Enum.NormalId.Back, "BRAINROT CONVEYOR", "HOLD [E] TO BUY CREATURES!", pal.ConveyorBorderGold)
 	makeSurfaceSign(northHeader, Enum.NormalId.Front, "BRAINROT CONVEYOR", "FRESH CREATURES SPAWN HERE!", pal.ConveyorBorderGold)
 
-	-- South Void Recycler Portal Arch (Z = +134)
+	-- South Void Recycler Portal Arch (Z = +134, raised cleanly to frame the Golden Rebirth Shrine behind it)
 	local southZ = cfg.EndZ + 6
-	makePart(convFolder, "SouthPillarL", Vector3.new(3.2, 16, 3.2), CFrame.new(-10.5, 8, southZ), pal.WallDark, Enum.Material.Metal)
-	makePart(convFolder, "SouthPillarR", Vector3.new(3.2, 16, 3.2), CFrame.new(10.5, 8, southZ), pal.WallDark, Enum.Material.Metal)
-	makePart(convFolder, "SouthPortalCurtain", Vector3.new(16.5, 12, 0.6), CFrame.new(0, 6.5, southZ), Color3.fromRGB(255, 52, 115), Enum.Material.ForceField, false)
+	makePart(convFolder, "SouthPillarL", Vector3.new(3.2, 22, 3.2), CFrame.new(-11.5, 11, southZ), pal.WallDark, Enum.Material.Metal)
+	makePart(convFolder, "SouthPillarR", Vector3.new(3.2, 22, 3.2), CFrame.new(11.5, 11, southZ), pal.WallDark, Enum.Material.Metal)
+	local southCurtain = makePart(convFolder, "SouthPortalCurtain", Vector3.new(17.5, 10.5, 0.6), CFrame.new(0, 5.8, southZ), Color3.fromRGB(255, 72, 138), Enum.Material.ForceField, false)
+	southCurtain.Transparency = 0.82
 
-	local southHeader = makePart(convFolder, "SouthArchSign", Vector3.new(24, 4.2, 2.2), CFrame.new(0, 17.5, southZ), pal.WallDark, Enum.Material.Metal)
+	local southHeader = makePart(convFolder, "SouthArchSign", Vector3.new(26, 4.2, 2.2), CFrame.new(0, 23.8, southZ), pal.WallDark, Enum.Material.Metal)
 	makeSurfaceSign(southHeader, Enum.NormalId.Front, "VOID RECYCLER", "UNBOUGHT CREATURES VANISH!", Color3.fromRGB(255, 82, 130))
 	makeSurfaceSign(southHeader, Enum.NormalId.Back, "VOID RECYCLER", "GOLDEN SHRINE AHEAD!", Color3.fromRGB(255, 205, 55))
 end
@@ -345,8 +348,8 @@ local function buildStripedStall(
 	stall.Parent = parent
 
 	-- Platform & counter
-	makePart(stall, "StallDeck", Vector3.new(28, 0.5, 16), originCF * CFrame.new(0, 0.25, 0), Color3.fromRGB(48, 30, 78))
-	makePart(stall, "CounterFront", Vector3.new(24, 3.4, 2.4), originCF * CFrame.new(0, 1.95, -4.5), Color3.fromRGB(68, 42, 112))
+	makePart(stall, "StallDeck", Vector3.new(28, 0.5, 16), originCF * CFrame.new(0, 0.25, 0), Color3.fromRGB(166, 138, 214))
+	makePart(stall, "CounterFront", Vector3.new(24, 3.4, 2.4), originCF * CFrame.new(0, 1.95, -4.5), Color3.fromRGB(136, 102, 198))
 	makePart(stall, "CounterTop", Vector3.new(24.8, 0.45, 3.1), originCF * CFrame.new(0, 3.75, -4.5), Color3.fromRGB(255, 208, 58), Enum.Material.Metal)
 
 	-- Support poles
@@ -408,7 +411,7 @@ local function buildSpawnAndShopPlaza(mapFolder: Folder, hooks: any)
 	spawner.Anchored = true
 	spawner.Neutral = true
 	spawner.Duration = 0
-	spawner.Color = Color3.fromRGB(72, 42, 128)
+	spawner.Color = Color3.fromRGB(142, 108, 206)
 	spawner.Material = Enum.Material.SmoothPlastic
 	spawner.TopSurface = Enum.SurfaceType.Smooth
 	spawner.Parent = plaza
@@ -440,7 +443,7 @@ local function buildSpawnAndShopPlaza(mapFolder: Folder, hooks: any)
 	for idx, item in ipairs(ShopConfig.Items) do
 		local xOff = (idx - 3) * 5.2
 		local pedCF = equipOrigin * CFrame.new(xOff, 1.2, -8.5)
-		local ped = makePart(equipStall, "ItemPedestal_" .. item.id, Vector3.new(2.4, 2.4, 2.4), pedCF * CFrame.Angles(0, 0, math.rad(90)), Color3.fromRGB(42, 26, 72), Enum.Material.Metal, true, Enum.PartType.Cylinder)
+		local ped = makePart(equipStall, "ItemPedestal_" .. item.id, Vector3.new(2.4, 2.4, 2.4), pedCF * CFrame.Angles(0, 0, math.rad(90)), Color3.fromRGB(132, 102, 194), Enum.Material.Metal, true, Enum.PartType.Cylinder)
 		makePart(equipStall, "ItemRim_" .. item.id, Vector3.new(0.24, 2.65, 2.65), pedCF * CFrame.new(0, 1.15, 0) * CFrame.Angles(0, 0, math.rad(90)), item.accentColor, Enum.Material.Neon, false, Enum.PartType.Cylinder)
 
 		local disp = ShopConfig.buildDisplayModel(item.id, pedCF * CFrame.new(0, 2.25, 0))
@@ -575,7 +578,7 @@ local function buildGoldenRebirthShrine(mapFolder: Folder, hooks: any)
 		{ pos = GameConfig.Shrine.HallEastPos + Vector3.new(8, 0, 0), id = "omni_nonna_prime", mut = "Void" },
 	}
 	for idx, entry in ipairs(showcasePairs) do
-		local ped = makePart(shrineFolder, "HallPedestal_" .. idx, Vector3.new(2.2, 6.5, 6.5), CFrame.new(entry.pos + Vector3.new(0, 1.1, 0)) * CFrame.Angles(0, 0, math.rad(90)), Color3.fromRGB(58, 36, 98), Enum.Material.Marble, true, Enum.PartType.Cylinder)
+		local ped = makePart(shrineFolder, "HallPedestal_" .. idx, Vector3.new(2.2, 6.5, 6.5), CFrame.new(entry.pos + Vector3.new(0, 1.1, 0)) * CFrame.Angles(0, 0, math.rad(90)), Color3.fromRGB(228, 222, 240), Enum.Material.Marble, true, Enum.PartType.Cylinder)
 		makePart(shrineFolder, "HallRim_" .. idx, Vector3.new(0.28, 6.9, 6.9), CFrame.new(entry.pos + Vector3.new(0, 2.25, 0)) * CFrame.Angles(0, 0, math.rad(90)), gold, Enum.Material.Neon, false, Enum.PartType.Cylinder)
 		local statue = CreatureConfig.buildCreatureModel(entry.id, entry.mut)
 		if statue then

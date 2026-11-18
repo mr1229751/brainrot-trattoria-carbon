@@ -201,8 +201,8 @@ function ConveyorService.spawnConveyorCreature(forcedCreatureId: string?, forced
 	local cfg = GameConfig.Conveyor
 	local laneX: number
 	if RunService:IsStudio() then
-		-- Keep west conveyor lane clear of Showcase Rarity Parade standing on east lane
-		laneX = -3.8 + (totalSpawnCounter % 2) * 1.4
+		-- Keep west conveyor edge clear of Showcase Rarity Parade on the east/center lane
+		laneX = -5.4
 	else
 		local laneIndex = (totalSpawnCounter % 3) - 1
 		laneX = laneIndex * 2.6
