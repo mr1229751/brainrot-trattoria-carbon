@@ -281,50 +281,6 @@ local function createPhotoTeleportPad(parent: Instance, name: string, padPos: Ve
 		Enum.PartType.Cylinder
 	)
 
-	local bb = Instance.new("BillboardGui")
-	bb.Name = "PhotoPadBillboard"
-	bb.Adornee = pad
-	bb.StudsOffset = Vector3.new(0, 4.2, 0)
-	bb.Size = UDim2.new(0, 240, 0, 68)
-	bb.MaxDistance = 160
-	bb.LightInfluence = 0
-	bb.Parent = pad
-
-	local card = Instance.new("Frame")
-	card.Size = UDim2.fromScale(1, 1)
-	card.BackgroundColor3 = Color3.fromRGB(16, 28, 48)
-	card.BackgroundTransparency = 0.08
-	card.BorderSizePixel = 0
-	card.Parent = bb
-	Instance.new("UICorner", card).CornerRadius = UDim.new(0, 10)
-	local st = Instance.new("UIStroke")
-	st.Color = Color3.fromRGB(55, 232, 255)
-	st.Thickness = 2.6
-	st.Parent = card
-
-	local lbl = Instance.new("TextLabel")
-	lbl.Size = UDim2.new(0.92, 0, 0.84, 0)
-	lbl.Position = UDim2.new(0.04, 0, 0.08, 0)
-	lbl.BackgroundTransparency = 1
-	lbl.Font = Enum.Font.GothamBlack
-	lbl.Text = "PHOTO POINT PAD\nSTEP TO TELEPORT"
-	lbl.TextColor3 = Color3.fromRGB(255, 255, 255)
-	lbl.TextScaled = true
-	lbl.Parent = card
-
-	local prompt = Instance.new("ProximityPrompt")
-	prompt.ActionText = "Teleport to Photo Point"
-	prompt.ObjectText = "Showcase Cover Camera"
-	prompt.KeyboardKeyCode = Enum.KeyCode.E
-	prompt.HoldDuration = 0
-	prompt.MaxActivationDistance = 12
-	prompt.RequiresLineOfSight = false
-	prompt.Parent = pad
-
-	prompt.Triggered:Connect(function(player: Player)
-		teleportPlayerToPhotoPoint(player)
-	end)
-
 	pad.Touched:Connect(function(hit: BasePart)
 		local char = hit and hit.Parent
 		local player = char and Players:GetPlayerFromCharacter(char)
