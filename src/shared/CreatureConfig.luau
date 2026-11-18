@@ -875,14 +875,14 @@ end
 
 local tagStaggerSeq = 0
 
--- Creates high-contrast overhead BillboardGui showing MUTATION, NAME, RARITY, $INCOME/S, and PRICE/STATUS
+-- Creates floating transparent-background BillboardGui showing compact Mutation pill, Name, Rarity, and $/s
 function CreatureConfig.createCreatureBillboard(
 	model: Model,
 	creatureId: string,
 	mutationName: string?,
-	mode: string, -- "conveyor" | "traveling" | "slot" | "stealing"
+	_mode: string?,
 	incomeMultiplier: number?,
-	customBottomText: string?
+	_customBottomText: string?
 ): BillboardGui?
 	local data = CreatureConfig.getCreature(creatureId)
 	local root = model.PrimaryPart
@@ -919,28 +919,15 @@ function CreatureConfig.createCreatureBillboard(
 	local container = Instance.new("Frame")
 	container.Name = "Card"
 	container.Size = UDim2.fromScale(1, 1)
-	container.BackgroundColor3 = Color3.fromRGB(16, 10, 28)
-	container.BackgroundTransparency = 0.08
+	container.BackgroundTransparency = 1
 	container.BorderSizePixel = 0
 	container.Parent = bb
-
-	local corner = Instance.new("UICorner")
-	corner.CornerRadius = UDim.new(0, 10)
-	corner.Parent = container
-
-	local stroke = Instance.new("UIStroke")
-	stroke.Color = if mutInfo.id ~= "None" then mutInfo.color else rarityInfo.color
-	stroke.Thickness = 2.6
-	stroke.Parent = container
-	if rarityInfo.isRainbow and mutInfo.id == "None" then
-		CollectionService:AddTag(stroke, "RainbowStroke")
-	end
 
 	local layout = Instance.new("UIListLayout")
 	layout.FillDirection = Enum.FillDirection.Vertical
 	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	layout.VerticalAlignment = Enum.VerticalAlignment.Center
-	layout.Padding = UDim.new(0, 1)
+	layout.Padding = UDim.new(0, 2)
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = container
 
@@ -948,7 +935,7 @@ function CreatureConfig.createCreatureBillboard(
 		local lbl = Instance.new("TextLabel")
 		lbl.Name = name
 		lbl.LayoutOrder = order
-		lbl.Size = UDim2.new(0.94, 0, heightScale, 0)
+		lbl.Size = UDim2.new(0.96, 0, heightScale, 0)
 		lbl.BackgroundTransparency = 1
 		lbl.Font = font or Enum.Font.GothamBlack
 		lbl.Text = textStr
@@ -957,42 +944,74 @@ function CreatureConfig.createCreatureBillboard(
 		lbl.Parent = container
 
 		local ts = Instance.new("UIStroke")
-		ts.Color = Color3.fromRGB(8, 4, 16)
-		ts.Thickness = 2.0
+		ts.Color = Color3.fromRGB(6, 3, 14)
+		ts.Thickness = 2.6
 		ts.Parent = lbl
 		return lbl
 	end
 
 	if mutInfo.id ~= "None" then
-		makeRow("MutationLabel", 1, mutInfo.badgeText, mutInfo.color, 0.20)
+		local pill = Instance.new("Frame")
+		pill.Name = "MutationPill"
+		pill.LayoutOrder = 1
+		pill.AutomaticSize = Enum.AutomaticSize.X
+		pill.Size = UDim2.new(0, 0, 0, 22)
+		pill.BackgroundColor3 = Color3.new(
+			mutInfo.color.R * 0.32,
+			mutInfo.color.G * 0.32,
+			mutInfo.color.B * 0.32
+		)
+		pill.BackgroundTransparency = 0.08
+		pill.BorderSizePixel = 0
+		pill.Parent = container
+
+		local pillCorner = Instance.new("UICorner")
+		pillCorner.CornerRadius = UDim.new(1, 0)
+		pillCorner.Parent = pill
+
+		local pillStroke = Instance.new("UIStroke")
+		pillStroke.Color = mutInfo.color
+		pillStroke.Thickness = 1.6
+		pillStroke.Parent = pill
+
+		local pillPad = Instance.new("UIPadding")
+		pillPad.PaddingLeft = UDim.new(0, 9)
+		pillPad.PaddingRight = UDim.new(0, 9)
+		pillPad.Parent = pill
+
+		local mutLbl = Instance.new("TextLabel")
+		mutLbl.Name = "MutationLabel"
+		mutLbl.AutomaticSize = Enum.AutomaticSize.X
+		mutLbl.Size = UDim2.new(0, 0, 1, 0)
+		mutLbl.BackgroundTransparency = 1
+		mutLbl.Font = Enum.Font.GothamBlack
+		mutLbl.Text = mutInfo.badgeText
+		mutLbl.TextColor3 = mutInfo.color
+		mutLbl.TextSize = 13
+		mutLbl.Parent = pill
+
+		local mts = Instance.new("UIStroke")
+		mts.Color = Color3.fromRGB(6, 3, 14)
+		mts.Thickness = 2.0
+		mts.Parent = mutLbl
 	end
 
-	makeRow("NameLabel", 2, string.upper(data.DisplayName), Color3.fromRGB(255, 255, 255), 0.25)
+	local nameLbl = makeRow("NameLabel", 2, string.upper(data.DisplayName), rarityInfo.color, 0.32)
+	if rarityInfo.isRainbow then
+		CollectionService:AddTag(nameLbl, "RainbowText")
+	end
 
-	local rarityLbl = makeRow("RarityLabel", 3, string.upper(rarityInfo.name), rarityInfo.color, 0.20)
+	local rarityTint = Color3.new(
+		rarityInfo.color.R + (1 - rarityInfo.color.R) * 0.25,
+		rarityInfo.color.G + (1 - rarityInfo.color.G) * 0.25,
+		rarityInfo.color.B + (1 - rarityInfo.color.B) * 0.25
+	)
+	local rarityLbl = makeRow("RarityLabel", 3, string.upper(rarityInfo.name), rarityTint, 0.21)
 	if rarityInfo.isRainbow then
 		CollectionService:AddTag(rarityLbl, "RainbowText")
 	end
 
-	makeRow("IncomeLabel", 4, FormatUtil.formatRate(effectiveIncome), Color3.fromRGB(82, 255, 132), 0.22)
-
-	local bottomText = customBottomText
-	local bottomColor = Color3.fromRGB(255, 218, 68)
-	if not bottomText then
-		if mode == "conveyor" then
-			bottomText = "PRICE: " .. FormatUtil.formatCash(data.PurchasePrice)
-		elseif mode == "traveling" then
-			bottomText = "WALKING TO BASE..."
-			bottomColor = Color3.fromRGB(95, 245, 255)
-		elseif mode == "stealing" then
-			bottomText = "[STEALING!]"
-			bottomColor = Color3.fromRGB(255, 58, 75)
-		else
-			bottomText = "EARNING IN BASE"
-			bottomColor = Color3.fromRGB(195, 175, 255)
-		end
-	end
-	makeRow("BottomLabel", 5, bottomText, bottomColor, 0.21)
+	makeRow("IncomeLabel", 4, FormatUtil.formatRate(effectiveIncome), Color3.fromRGB(82, 255, 132), 0.27)
 
 	return bb
 end

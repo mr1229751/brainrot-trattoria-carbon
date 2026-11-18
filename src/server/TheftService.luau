@@ -40,6 +40,8 @@ function TheftService.attachStealingBanner(model: Model, creatureId: string, mut
 	local mutInfo = MutationConfig.getMutationInfo(mutationName)
 	local rate = EconomyConfig.computeSlotIncome(cDef.IncomePerSecond, mutationName, 1)
 
+	local rInfo = CreatureConfig.getRarityInfo(cDef.Rarity)
+
 	local bb = Instance.new("BillboardGui")
 	bb.Name = "CreatureInfoBillboard"
 	bb.Adornee = root
@@ -53,58 +55,78 @@ function TheftService.attachStealingBanner(model: Model, creatureId: string, mut
 	local card = Instance.new("Frame")
 	card.Name = "Card"
 	card.Size = UDim2.fromScale(1, 1)
-	card.BackgroundColor3 = Color3.fromRGB(58, 10, 20)
-	card.BackgroundTransparency = 0.06
+	card.BackgroundTransparency = 1
 	card.BorderSizePixel = 0
 	card.Parent = bb
 
-	Instance.new("UICorner", card).CornerRadius = UDim.new(0, 10)
-	local stroke = Instance.new("UIStroke")
-	stroke.Color = Color3.fromRGB(255, 52, 72)
-	stroke.Thickness = 3.0
-	stroke.Parent = card
+	local layout = Instance.new("UIListLayout")
+	layout.FillDirection = Enum.FillDirection.Vertical
+	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	layout.VerticalAlignment = Enum.VerticalAlignment.Center
+	layout.Padding = UDim.new(0, 2)
+	layout.SortOrder = Enum.SortOrder.LayoutOrder
+	layout.Parent = card
+
+	local stealPill = Instance.new("Frame")
+	stealPill.Name = "StealPill"
+	stealPill.LayoutOrder = 1
+	stealPill.AutomaticSize = Enum.AutomaticSize.X
+	stealPill.Size = UDim2.new(0, 0, 0, 26)
+	stealPill.BackgroundColor3 = Color3.fromRGB(165, 18, 36)
+	stealPill.BackgroundTransparency = 0.06
+	stealPill.BorderSizePixel = 0
+	stealPill.Parent = card
+	Instance.new("UICorner", stealPill).CornerRadius = UDim.new(1, 0)
+	local pStroke = Instance.new("UIStroke")
+	pStroke.Color = Color3.fromRGB(255, 78, 95)
+	pStroke.Thickness = 1.8
+	pStroke.Parent = stealPill
+	local pPad = Instance.new("UIPadding")
+	pPad.PaddingLeft = UDim.new(0, 10)
+	pPad.PaddingRight = UDim.new(0, 10)
+	pPad.Parent = stealPill
 
 	local badge = Instance.new("TextLabel")
-	badge.Size = UDim2.new(0.94, 0, 0.44, 0)
-	badge.Position = UDim2.new(0.03, 0, 0.04, 0)
+	badge.AutomaticSize = Enum.AutomaticSize.X
+	badge.Size = UDim2.new(0, 0, 1, 0)
 	badge.BackgroundTransparency = 1
 	badge.Font = Enum.Font.GothamBlack
 	badge.Text = "[STEALING!]"
-	badge.TextColor3 = Color3.fromRGB(255, 75, 88)
-	badge.TextScaled = true
-	badge.Parent = card
+	badge.TextColor3 = Color3.fromRGB(255, 245, 248)
+	badge.TextSize = 15
+	badge.Parent = stealPill
 	local bStroke = Instance.new("UIStroke")
 	bStroke.Color = Color3.fromRGB(10, 4, 14)
-	bStroke.Thickness = 2.8
+	bStroke.Thickness = 2.2
 	bStroke.Parent = badge
 
 	local prefix = if mutInfo.id ~= "None" then ("[" .. mutInfo.displayName .. "] ") else ""
 	local nameLbl = Instance.new("TextLabel")
-	nameLbl.Size = UDim2.new(0.94, 0, 0.28, 0)
-	nameLbl.Position = UDim2.new(0.03, 0, 0.46, 0)
+	nameLbl.LayoutOrder = 2
+	nameLbl.Size = UDim2.new(0.96, 0, 0.30, 0)
 	nameLbl.BackgroundTransparency = 1
 	nameLbl.Font = Enum.Font.GothamBlack
 	nameLbl.Text = prefix .. string.upper(cDef.DisplayName)
-	nameLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
+	nameLbl.TextColor3 = rInfo.color
 	nameLbl.TextScaled = true
 	nameLbl.Parent = card
 	local nStroke = Instance.new("UIStroke")
-	nStroke.Color = Color3.fromRGB(10, 4, 14)
-	nStroke.Thickness = 2.4
+	nStroke.Color = Color3.fromRGB(6, 3, 14)
+	nStroke.Thickness = 2.6
 	nStroke.Parent = nameLbl
 
 	local rateLbl = Instance.new("TextLabel")
-	rateLbl.Size = UDim2.new(0.94, 0, 0.22, 0)
-	rateLbl.Position = UDim2.new(0.03, 0, 0.74, 0)
+	rateLbl.LayoutOrder = 3
+	rateLbl.Size = UDim2.new(0.96, 0, 0.24, 0)
 	rateLbl.BackgroundTransparency = 1
-	rateLbl.Font = Enum.Font.GothamBold
-	rateLbl.Text = cDef.Rarity .. " • " .. FormatUtil.formatRate(rate)
-	rateLbl.TextColor3 = Color3.fromRGB(255, 224, 92)
+	rateLbl.Font = Enum.Font.GothamBlack
+	rateLbl.Text = FormatUtil.formatRate(rate)
+	rateLbl.TextColor3 = Color3.fromRGB(82, 255, 132)
 	rateLbl.TextScaled = true
 	rateLbl.Parent = card
 	local rStroke = Instance.new("UIStroke")
-	rStroke.Color = Color3.fromRGB(10, 4, 14)
-	rStroke.Thickness = 2.2
+	rStroke.Color = Color3.fromRGB(6, 3, 14)
+	rStroke.Thickness = 2.4
 	rStroke.Parent = rateLbl
 end
 
