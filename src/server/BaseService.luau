@@ -246,15 +246,17 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 		false
 	)
 
-	-- Large Exterior Owner & Base Sign facing the Central Conveyor
+	-- Large Exterior Owner & Base Sign facing the Central Conveyor (transparent floating text, 0.7x scale)
 	local mainSignPos = posAt(-1.1, 0, dim.WallHeight + 4.2)
 	local mainSignPart = makeBasePart(
 		model,
 		"MainOwnerSign",
-		Vector3.new(28, 5.6, 1.2),
+		Vector3.new(19.6, 3.92, 0.4),
 		CFrame.lookAt(mainSignPos, mainSignPos + outwardDir),
 		Color3.fromRGB(22, 14, 38),
-		Enum.Material.Metal
+		Enum.Material.SmoothPlastic,
+		false,
+		1
 	)
 
 	local ownerSg = Instance.new("SurfaceGui")
@@ -268,28 +270,28 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 
 	local signBg = Instance.new("Frame")
 	signBg.Size = UDim2.fromScale(1, 1)
-	signBg.BackgroundColor3 = Color3.fromRGB(22, 12, 40)
+	signBg.BackgroundTransparency = 1
 	signBg.BorderSizePixel = 0
 	signBg.Parent = ownerSg
-	local signStroke = Instance.new("UIStroke")
-	signStroke.Color = def.accent
-	signStroke.Thickness = 6
-	signStroke.Parent = signBg
 
 	local baseTitleLabel = Instance.new("TextLabel")
 	baseTitleLabel.Name = "BaseTitle"
-	baseTitleLabel.Size = UDim2.new(0.94, 0, 0.44, 0)
-	baseTitleLabel.Position = UDim2.new(0.03, 0, 0.05, 0)
+	baseTitleLabel.Size = UDim2.new(0.94, 0, 0.46, 0)
+	baseTitleLabel.Position = UDim2.new(0.03, 0, 0.04, 0)
 	baseTitleLabel.BackgroundTransparency = 1
 	baseTitleLabel.Font = Enum.Font.GothamBlack
 	baseTitleLabel.Text = def.name
 	baseTitleLabel.TextColor3 = def.accent
 	baseTitleLabel.TextScaled = true
 	baseTitleLabel.Parent = signBg
+	local btStroke = Instance.new("UIStroke")
+	btStroke.Color = Color3.fromRGB(6, 3, 14)
+	btStroke.Thickness = 3.0
+	btStroke.Parent = baseTitleLabel
 
 	local ownerNameLabel = Instance.new("TextLabel")
 	ownerNameLabel.Name = "OwnerName"
-	ownerNameLabel.Size = UDim2.new(0.94, 0, 0.42, 0)
+	ownerNameLabel.Size = UDim2.new(0.94, 0, 0.44, 0)
 	ownerNameLabel.Position = UDim2.new(0.03, 0, 0.52, 0)
 	ownerNameLabel.BackgroundTransparency = 1
 	ownerNameLabel.Font = Enum.Font.GothamBlack
@@ -297,16 +299,22 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 	ownerNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 	ownerNameLabel.TextScaled = true
 	ownerNameLabel.Parent = signBg
+	local onStroke = Instance.new("UIStroke")
+	onStroke.Color = Color3.fromRGB(6, 3, 14)
+	onStroke.Thickness = 3.0
+	onStroke.Parent = ownerNameLabel
 
-	-- Gate Lock Countdown Sign directly over doorway
+	-- Gate Lock Countdown Sign directly over doorway (transparent floating text, 0.7x scale)
 	local gateSignPos = posAt(-1.15, 0, dim.DoorHeightY + 2.3)
 	local gateSignPart = makeBasePart(
 		model,
 		"GateStatusSign",
-		Vector3.new(15.5, 3.2, 0.9),
+		Vector3.new(10.85, 2.24, 0.4),
 		CFrame.lookAt(gateSignPos, gateSignPos + outwardDir),
 		Color3.fromRGB(20, 12, 34),
-		Enum.Material.Metal
+		Enum.Material.SmoothPlastic,
+		false,
+		1
 	)
 
 	local gateSg = Instance.new("SurfaceGui")
@@ -320,24 +328,29 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 
 	local gateBg = Instance.new("Frame")
 	gateBg.Size = UDim2.fromScale(1, 1)
-	gateBg.BackgroundColor3 = Color3.fromRGB(18, 38, 28)
+	gateBg.BackgroundTransparency = 1
 	gateBg.BorderSizePixel = 0
 	gateBg.Parent = gateSg
 	local gateStroke = Instance.new("UIStroke")
 	gateStroke.Color = Color3.fromRGB(65, 245, 115)
-	gateStroke.Thickness = 4
+	gateStroke.Thickness = 0
+	gateStroke.Transparency = 1
 	gateStroke.Parent = gateBg
 
 	local gateStatusLabel = Instance.new("TextLabel")
 	gateStatusLabel.Name = "StatusText"
-	gateStatusLabel.Size = UDim2.new(0.92, 0, 0.82, 0)
-	gateStatusLabel.Position = UDim2.new(0.04, 0, 0.09, 0)
+	gateStatusLabel.Size = UDim2.new(0.94, 0, 0.86, 0)
+	gateStatusLabel.Position = UDim2.new(0.03, 0, 0.07, 0)
 	gateStatusLabel.BackgroundTransparency = 1
 	gateStatusLabel.Font = Enum.Font.GothamBlack
 	gateStatusLabel.Text = "UNLOCKED"
 	gateStatusLabel.TextColor3 = Color3.fromRGB(75, 255, 125)
 	gateStatusLabel.TextScaled = true
 	gateStatusLabel.Parent = gateBg
+	local gsStroke = Instance.new("UIStroke")
+	gsStroke.Color = Color3.fromRGB(6, 3, 14)
+	gsStroke.Thickness = 3.0
+	gsStroke.Parent = gateStatusLabel
 
 	-- Red Laser Security Gate Beams + Invisible PhysicsService Collision Barrier
 	local laserBars = {}
@@ -399,31 +412,30 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 	lockBb.Name = "LockButtonGui"
 	lockBb.Adornee = lockButtonPart
 	lockBb.StudsOffset = Vector3.new(0, 3.2, 0)
-	lockBb.Size = UDim2.new(0, 235, 0, 74)
+	lockBb.Size = UDim2.new(0, 165, 0, 52)
 	lockBb.MaxDistance = 210
 	lockBb.LightInfluence = 0
 	lockBb.Parent = lockButtonPart
 
 	local lockBbFrame = Instance.new("Frame")
 	lockBbFrame.Size = UDim2.fromScale(1, 1)
-	lockBbFrame.BackgroundColor3 = Color3.fromRGB(24, 14, 42)
-	lockBbFrame.BackgroundTransparency = 0.12
+	lockBbFrame.BackgroundTransparency = 1
+	lockBbFrame.BorderSizePixel = 0
 	lockBbFrame.Parent = lockBb
-	Instance.new("UICorner", lockBbFrame).CornerRadius = UDim.new(0, 8)
-	local lockBbStroke = Instance.new("UIStroke")
-	lockBbStroke.Color = Color3.fromRGB(255, 65, 90)
-	lockBbStroke.Thickness = 2
-	lockBbStroke.Parent = lockBbFrame
 
 	local lockButtonLabel = Instance.new("TextLabel")
-	lockButtonLabel.Size = UDim2.new(0.92, 0, 0.84, 0)
-	lockButtonLabel.Position = UDim2.new(0.04, 0, 0.08, 0)
+	lockButtonLabel.Size = UDim2.new(0.96, 0, 0.88, 0)
+	lockButtonLabel.Position = UDim2.new(0.02, 0, 0.06, 0)
 	lockButtonLabel.BackgroundTransparency = 1
 	lockButtonLabel.Font = Enum.Font.GothamBlack
 	lockButtonLabel.Text = "LOCK LASERS\n[F] READY"
 	lockButtonLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 	lockButtonLabel.TextScaled = true
 	lockButtonLabel.Parent = lockBbFrame
+	local lbStroke = Instance.new("UIStroke")
+	lbStroke.Color = Color3.fromRGB(6, 3, 14)
+	lbStroke.Thickness = 2.6
+	lbStroke.Parent = lockButtonLabel
 
 	-- Green Cash Collection Platform inside entrance
 	local cashPadPos = posAt(dim.CashPadDepth, dim.CashPadZOffset, 0.45)
@@ -448,42 +460,45 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 	cashBb.Name = "CashPlatformGui"
 	cashBb.Adornee = cashPadPart
 	cashBb.StudsOffset = Vector3.new(0, 4.2, 0)
-	cashBb.Size = UDim2.new(0, 285, 0, 92)
+	cashBb.Size = UDim2.new(0, 200, 0, 64)
 	cashBb.MaxDistance = 260
 	cashBb.LightInfluence = 0
 	cashBb.Parent = cashPadPart
 
 	local cashFrame = Instance.new("Frame")
 	cashFrame.Size = UDim2.fromScale(1, 1)
-	cashFrame.BackgroundColor3 = Color3.fromRGB(14, 38, 22)
-	cashFrame.BackgroundTransparency = 0.12
+	cashFrame.BackgroundTransparency = 1
+	cashFrame.BorderSizePixel = 0
 	cashFrame.Parent = cashBb
-	Instance.new("UICorner", cashFrame).CornerRadius = UDim.new(0, 10)
-	local cashStroke = Instance.new("UIStroke")
-	cashStroke.Color = pal.CashPadGreen
-	cashStroke.Thickness = 2.5
-	cashStroke.Parent = cashFrame
 
 	local cashTitle = Instance.new("TextLabel")
-	cashTitle.Size = UDim2.new(0.92, 0, 0.36, 0)
-	cashTitle.Position = UDim2.new(0.04, 0, 0.06, 0)
+	cashTitle.Size = UDim2.new(0.96, 0, 0.36, 0)
+	cashTitle.Position = UDim2.new(0.02, 0, 0.04, 0)
 	cashTitle.BackgroundTransparency = 1
-	cashTitle.Font = Enum.Font.GothamBold
+	cashTitle.Font = Enum.Font.GothamBlack
 	cashTitle.Text = "COLLECT CASH"
-	cashTitle.TextColor3 = Color3.fromRGB(175, 255, 198)
+	cashTitle.TextColor3 = Color3.fromRGB(110, 255, 152)
 	cashTitle.TextScaled = true
 	cashTitle.Parent = cashFrame
+	local ctStroke = Instance.new("UIStroke")
+	ctStroke.Color = Color3.fromRGB(6, 3, 14)
+	ctStroke.Thickness = 2.4
+	ctStroke.Parent = cashTitle
 
 	local cashAmountLabel = Instance.new("TextLabel")
 	cashAmountLabel.Name = "AmountLabel"
-	cashAmountLabel.Size = UDim2.new(0.92, 0, 0.52, 0)
-	cashAmountLabel.Position = UDim2.new(0.04, 0, 0.42, 0)
+	cashAmountLabel.Size = UDim2.new(0.96, 0, 0.54, 0)
+	cashAmountLabel.Position = UDim2.new(0.02, 0, 0.42, 0)
 	cashAmountLabel.BackgroundTransparency = 1
 	cashAmountLabel.Font = Enum.Font.GothamBlack
 	cashAmountLabel.Text = "$0"
 	cashAmountLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 	cashAmountLabel.TextScaled = true
 	cashAmountLabel.Parent = cashFrame
+	local caStroke = Instance.new("UIStroke")
+	caStroke.Color = Color3.fromRGB(6, 3, 14)
+	caStroke.Thickness = 2.8
+	caStroke.Parent = cashAmountLabel
 
 	-- 10 Interior Character Display Pedestals (Slots 1-5 North, Slots 6-10 South)
 	local slots = {}
@@ -514,16 +529,17 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 			Enum.PartType.Cylinder
 		)
 
-		-- Floor slot plaque facing center aisle
+		-- Floor slot plaque facing center aisle (transparent floating text, 0.7x scale)
 		local plaquePos = slotTopPos + slotFaceDir * 3.1 - Vector3.new(0, 0.65, 0)
 		local plaquePart = makeBasePart(
 			model,
 			"SlotPlaque_" .. tostring(sIdx),
-			Vector3.new(3.8, 1.0, 0.35),
+			Vector3.new(2.66, 0.70, 0.25),
 			CFrame.lookAt(plaquePos, plaquePos + slotFaceDir + Vector3.new(0, 0.45, 0)),
 			Color3.fromRGB(24, 15, 42),
-			Enum.Material.Metal,
-			false
+			Enum.Material.SmoothPlastic,
+			false,
+			1
 		)
 
 		local pSg = Instance.new("SurfaceGui")
@@ -535,14 +551,18 @@ local function constructSingleBase(basesFolder: Folder, def: any)
 		pSg.Parent = plaquePart
 
 		local plaqueLabel = Instance.new("TextLabel")
-		plaqueLabel.Size = UDim2.fromScale(0.94, 0.88)
-		plaqueLabel.Position = UDim2.fromScale(0.03, 0.06)
+		plaqueLabel.Size = UDim2.fromScale(0.96, 0.90)
+		plaqueLabel.Position = UDim2.fromScale(0.02, 0.05)
 		plaqueLabel.BackgroundTransparency = 1
 		plaqueLabel.Font = Enum.Font.GothamBlack
 		plaqueLabel.Text = "SLOT #" .. tostring(sIdx) .. " • EMPTY"
-		plaqueLabel.TextColor3 = Color3.fromRGB(175, 155, 215)
+		plaqueLabel.TextColor3 = Color3.fromRGB(220, 210, 248)
 		plaqueLabel.TextScaled = true
 		plaqueLabel.Parent = pSg
+		local plStroke = Instance.new("UIStroke")
+		plStroke.Color = Color3.fromRGB(6, 3, 14)
+		plStroke.Thickness = 2.6
+		plStroke.Parent = plaqueLabel
 
 		-- Prompt A: Owner Sell Prompt
 		local sellPrompt = Instance.new("ProximityPrompt")
@@ -708,7 +728,7 @@ function BaseService.updateSlotVisuals(base, slotIndex: number)
 	if not slot.occupied or not slot.creatureId then
 		slot.rimPart.Color = Color3.fromRGB(115, 78, 175)
 		slot.plaqueLabel.Text = "SLOT #" .. tostring(slotIndex) .. " • EMPTY"
-		slot.plaqueLabel.TextColor3 = Color3.fromRGB(175, 155, 215)
+		slot.plaqueLabel.TextColor3 = Color3.fromRGB(220, 210, 248)
 		slot.sellPrompt.Enabled = false
 		slot.stealPrompt.Enabled = false
 		return
